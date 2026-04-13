@@ -3,42 +3,78 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Go</title>
+
   <style>
     body {
       margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: #000;
+      background: #0f0f0f;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
     input {
-      font-size: 24px;
-      padding: 12px;
-      width: 80%;
-      border-radius: 12px;
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 14px;
       border: none;
       outline: none;
+      margin-bottom: 12px;
+      background: #1c1c1e;
+      color: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      border-radius: 14px;
+      border: none;
+      background: #0a84ff;
+      color: white;
+      font-weight: 600;
+    }
+
+    button:active {
+      opacity: 0.8;
     }
   </style>
 </head>
+
 <body>
-  <input id="url" placeholder="Enter URL..." autofocus>
+  <div class="container">
+    <input id="url" placeholder="Enter URL..." autofocus>
+    <button onclick="go()">Go</button>
+  </div>
 
   <script>
     const input = document.getElementById("url");
 
-    input.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        let url = input.value.trim();
+    function go() {
+      let url = input.value.trim();
 
-        // If no protocol, assume http (works for local IPs)
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-          url = "http://" + url;
-        }
+      if (!url) return;
 
-        window.location.href = url;
+      // Handle missing protocol (important for local IPs)
+      if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        url = "http://" + url;
       }
+
+      window.location.href = url;
+    }
+
+    // Allow Enter key too
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") go();
     });
   </script>
 </body>
